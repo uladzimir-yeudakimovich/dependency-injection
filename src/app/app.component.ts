@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'dependency-injection';
+  @Input() accountAdded = new EventEmitter<{name: string, status: string}>();
+
+  onCreateAccount(accountName: string, accountStatus: string) {
+    this.accountAdded.emit({
+      name: accountName,
+      status: accountStatus
+    });
+    console.log('A server status changed, new status:' + accountStatus);
+  }
 }
