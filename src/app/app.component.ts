@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,13 +6,27 @@ import { Component, Input, EventEmitter } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  @Input() accountAdded = new EventEmitter<{name: string, status: string}>();
+  accounts = [
+    {
+      name: 'Master Account',
+      status: 'active'
+    },
+    {
+      name: 'Test Account',
+      status: 'inactive'
+    },
+    {
+      name: 'Hidden Account',
+      status: 'unKnown'
+    }
+  ];
 
-  onCreateAccount(accountName: string, accountStatus: string) {
-    this.accountAdded.emit({
-      name: accountName,
-      status: accountStatus
-    });
-    console.log('A server status changed, new status:' + accountStatus);
+  onAccountAdded(newAccount: {name: string, status: string}) {
+    this.accounts.push(newAccount);
   }
+
+  onStatusChanged(updateInfo: {id: number, newStatus: string}) {
+    this.accounts[updateInfo.id].status = updateInfo.newStatus;
+  }
+
 }
